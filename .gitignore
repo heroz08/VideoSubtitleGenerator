@@ -5,3 +5,4 @@ yarn.lock
 whisper.cpp
 .DS_Store
 package-lock.json
+examples

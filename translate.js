@@ -9,6 +9,7 @@ import {
   translateServiceProvider,
 } from './config.js';
 import { renderTemplate } from './utils.js';
+import { log } from 'console';
 
 export default async function translate(folder, fileName, absolutePath) {
   const renderContentTemplate = contentTemplate[contentTemplateRule];
@@ -21,6 +22,7 @@ export default async function translate(folder, fileName, absolutePath) {
         const source = data[i + 2];
         if (!source) continue;
         let text;
+        
         switch (translateServiceProvider) {
           case supportedService.volc:
             const volc = await import('./service/volc.js');
