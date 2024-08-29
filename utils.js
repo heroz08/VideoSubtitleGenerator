@@ -73,7 +73,7 @@ function runCommand(command, args) {
   });
 }
 
-export const isDarwin = () => os.platform() === 'darwin';
+export const isDarwinOrLinux = () => os.platform() === 'darwin' || os.platform() === 'linux';
 
 export const isWin32 = () => os.platform() === 'win32';
 
@@ -92,7 +92,7 @@ export const installWhisper = async () => {
   if (!fs.existsSync(modelPath)) {
     let script;
     console.log('正在安装 whisper.cpp 模型');
-    if (isDarwin()) {
+    if (isDarwinOrLinux()) {
       script = path.join('./', './whisper/models/download-ggml-model.sh');
       await runCommand('bash', [script, whisperModel]);
     } else if (isWin32()) {
@@ -102,7 +102,7 @@ export const installWhisper = async () => {
       throw Error('platform does not support! ')
     }
   }
-  if (isDarwin() && !fs.existsSync(mainPath)) {
+  if (isDarwinOrLinux() && !fs.existsSync(mainPath)) {
     // 编译 whisper.cpp
     console.log('正在编译 whisper.cpp');
     await runCommand('make', ['-C', './whisper.cpp']);
